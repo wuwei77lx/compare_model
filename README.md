@@ -1,5 +1,10 @@
 # Original code to predict gene-peak model from paired scRNA-seq and scATAC-seq or only scATAC-seq and evaluate models
 
+## Introduction
+
+We present a novel model, predicting single-cell enhancer-gene interactions by integrating priori Hi-C information (SCEG-HiC), which predicts interactions between genes and enhancers using multiomics (paired scRNA-seq and scATAC-seq or only scATAC-seq) sequencing data and three-dimensional omics data (average Hi-C) . The approach uses weighted graphical lasso (wglasso) model, taking the average Hi-C data as priori knowledge, to predict cell specific interactions between genes and enhancers based on the correlation between genes and enhancers.
+To validate the quality of peak-gene relationships predicted by SCEG-HiC, we benchmarked its predictions to against other tools that predict peak-gene using multiomics data.For paired scRNA-seq and scATAC-seq data, compared SCEG-HiC to Pearson, Spearman, cellOracle, DIRECT-NET, SCENIC+, FigR, and Signac. For only scATAC-seq data, we compared it to Cicero, DIRECT-NET, chi2+fdr, scEChIA, and Pearson. We assessed the quality of predicted peak-gene associations making use of  Hi-C data and eQTL data.
+
 ## Predict gene-peak model
 Table 1 below shows **the information predict gene-peak model from paired scRNA-seq and scATAC-seq**.
 
