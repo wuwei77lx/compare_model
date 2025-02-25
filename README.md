@@ -55,3 +55,23 @@ We evaluated model  making use of  Hi-C data and eQTL data.```|-- code/evaluatio
 ### evaluation metrics:
 - AUPRC:area under the precision-recall curve.
 - Early Precision:the fraction of true positives in the top-k edges(k equaled the number of edges in the ground-truth).
+
+## Reference
+
+cellOracle:Kamimoto, K., Stringa, B., Hoffmann, C. M., Jindal, K., Solnica-Krezel, L., & Morris, S. A. (2023). Dissecting cell identity via network inference and in silico gene perturbation. Nature, 614(7949), 742–751. https://doi.org/10.1038/s41586-022-05688-9
+
+DIRECT-NET:Zhang, L., Zhang, J., & Nie, Q. (2022). DIRECT-NET: An efficient method to discover cis-regulatory elements and construct regulatory networks from single-cell multiomics data. Science advances, 8(22), eabl7393. https://doi.org/10.1126/sciadv.abl7393
+
+SCENIC+:Bravo González-Blas, C., De Winter, S., Hulselmans, G., Hecker, N., Matetovici, I., Christiaens, V., Poovathingal, S., Wouters, J., Aibar, S., & Aerts, S. (2023). SCENIC+: single-cell multiomic inference of enhancers and gene regulatory networks. Nature methods, 20(9), 1355–1367. https://doi.org/10.1038/s41592-023-01938-4
+
+FigR:Kartha, V. K., Duarte, F. M., Hu, Y., Ma, S., Chew, J. G., Lareau, C. A., Earl, A., Burkett, Z. D., Kohlway, A. S., Lebofsky, R., & Buenrostro, J. D. (2022). Functional inference of gene regulation using single-cell multi-omics. Cell genomics, 2(9), 100166. https://doi.org/10.1016/j.xgen.2022.100166
+
+Signac:Stuart, T., Srivastava, A., Madad, S., Lareau, C. A., & Satija, R. (2021). Single-cell chromatin state analysis with Signac. Nature methods, 18(11), 1333–1341. https://doi.org/10.1038/s41592-021-01282-5
+
+cicero:Pliner, H. A., Packer, J. S., McFaline-Figueroa, J. L., Cusanovich, D. A., Daza, R. M., Aghamirzaie, D., Srivatsan, S., Qiu, X., Jackson, D., Minkina, A., Adey, A. C., Steemers, F. J., Shendure, J., & Trapnell, C. (2018). Cicero Predicts cis-Regulatory DNA Interactions from Single-Cell Chromatin Accessibility Data. Molecular cell, 71(5), 858–871.e8. https://doi.org/10.1016/j.molcel.2018.06.044
+
+scEChIA:Pandey, N., Omkar Chandra, Mishra, S., & Kumar, V. (2021). Improving Chromatin-Interaction Prediction Using Single-Cell Open-Chromatin Profiles and Making Insight Into the Cis-Regulatory Landscape of the Human Brain. Frontiers in genetics, 12, 738194. https://doi.org/10.3389/fgene.2021.738194
+
+
+## Contact
+If you have any problems, comments or suggestions, please contact us at XuanLiang (<liangxuan2022@sinh.ac.cn>).
