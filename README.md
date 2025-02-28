@@ -56,6 +56,81 @@ We evaluated model  making use of  Hi-C data and eQTL data.```|-- code/evaluatio
 - AUPRC:area under the precision-recall curve.
 - Early Precision:the fraction of true positives in the top-k edges(k equaled the number of edges in the ground-truth).
 
+## Average Hi-C
+In [Activity by Contact (ABC)](https://www.nature.com/articles/s41588-019-0538-0) model, proved using an average Hi-C profile gives approximately equally good performance as using a cell-type specific Hi-C profile.To facilitate making model predictions in a large panel of cell types, including those without cell type-specific Hi-C data, we have provided an average Hi-C matrix .
+
+### human average Hi-C(provided by ABC model)
+The celltypes used by human for averaging are: GM12878, NHEK, HMEC, RPE1, THP1, IMR90, HUVEC, HCT116, K562, KBM7.
+
+Average Hi-C data can be downloaded from: 
+
+**The human avg HiC file here**: https://www.encodeproject.org/files/ENCFF134PUN/@@download/ENCFF134PUN.bed.gz (54.1 GB)
+
+Extract the human bulk average Hi-C using  ```|-- code/Hi_C/extract_avg_hic.py```.
+
+```{sh eval=FALSE}
+python code/Hi_C/extract_avg_hic.py --avg_hic_bed_file ../ENCFF134PUN.bed.gz --output_dir ../
+```
+
+### mouse average Hi-C
+The celltypes used by mouse for averaging are: mESC1, mESC2, CH12LX, CH12F3, fiber, epithelium, B.
+
+Table 3 below shows **the source of mouse Hi-C for producing average Hi-C**.
+
+
+| celltype                                   | source      | URL                                                                                                                             |
+| ------------------------------------------ | ---------   | ------------------------------------------------------------------------------------------------------------------------------- |
+| mouse embryonic stem cell(C57BL6/129s4)    | GSE124193   | https://www.encodeproject.org/files/ENCFF409ZRS/@@download/ENCFF409ZRS.hic                                                      |
+| mouse embryonic stem cell(strain 129/Ola)  | GSE82144    | https://www.encodeproject.org/files/ENCFF584EDJ/@@download/ENCFF584EDJ.hic                                                      |
+| CH12F                                      | GSE98119    | https://www.encodeproject.org/files/ENCFF909ODS/@@download/ENCFF909ODS.hic                                                      |
+| mature B cell                              | GSE82144    | https://www.encodeproject.org/files/ENCFF026SNO/@@download/ENCFF026SNO.hic                                                      |
+| CH12.LX                                    | GSE63525    | https://www.encodeproject.org/files/ENCFF076GYR/@@download/ENCFF076GYR.hic                                                      |
+| epithelium                                 | GSE243851   | https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE243851&format=file&file=GSE243851%5Fepi%5Fboth%5Fsamples%5Finter%5F30%2Ehic   |
+| fiber                                      | GSE243851   | https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE243851&format=file&file=GSE243851%5Ffiber%5Fboth%5Fsamples%5Finter%5F30%2Ehic |
+
+
+
+**producing average Hi-C consists of the following steps(```|-- code/Hi_C```)**:
+
+1.Download hic matrix file from juicebox.
+
+2.Fit HiC data to powerlaw model and extract parameters.
+
+3.Make average Hi-C.
+
+- Step 1. Download hic matrix file from juicebox(all celltypes)
+  
+```
+wget https://github.com/aidenlab/Juicebox/releases/download/v2.13.06/juicer_tools_2.13.06.jar
+python code/Hi_C/juicebox_dump.py \
+--hic_file https://www.encodeproject.org/files/ENCFF409ZRS/@@download/ENCFF409ZRS.hic \
+--juicebox "java -jar juicer_tools_2.13.06.jar" \
+--resolution 5000 \
+--outdir mouse_contact/ESC1
+```
+
+- Step 2. Fit HiC data to powerlaw model and extract parameters
+
+```
+python code/Hi_C/compute_powerlaw_fit_from_hic.py \
+--hic_dir mouse_contact/ESC1 \
+--outDir mouse_contact/ESC2/powerlaw \
+--hic_resolution 5000
+```
+
+
+- Step 3. Make average Hi-C
+
+```
+python code/Hi_C/makeAverageHiC.py \
+--celltypes ESC1,ESC2,CH12F3,B,CH12LX,fiber,epi \
+--chromosome chr1 \
+--basedir mouse_contact \
+--outDir mouse_contact/average_HiC
+```
+
+**The mouse avg HiC file here**: [10.5281/zenodo.14849886](https://zenodo.org/record/14849886) (13.9 GB)
+
 ## Reference
 
 cellOracle:Kamimoto, K., Stringa, B., Hoffmann, C. M., Jindal, K., Solnica-Krezel, L., & Morris, S. A. (2023). Dissecting cell identity via network inference and in silico gene perturbation. Nature, 614(7949), 742–751. https://doi.org/10.1038/s41586-022-05688-9
