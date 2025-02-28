@@ -114,7 +114,7 @@ python code/Hi_C/juicebox_dump.py \
 ```
 python code/Hi_C/compute_powerlaw_fit_from_hic.py \
 --hic_dir mouse_contact/ESC1 \
---outDir mouse_contact/ESC2/powerlaw \
+--outDir mouse_contact/ESC1/powerlaw \
 --hic_resolution 5000
 ```
 
