@@ -102,6 +102,7 @@ Table 3 below shows **the source of mouse Hi-C for producing average Hi-C**.
   
 ```
 wget https://github.com/aidenlab/Juicebox/releases/download/v2.13.06/juicer_tools_2.13.06.jar
+# hic_file can use local files to save time
 python code/Hi_C/juicebox_dump.py \
 --hic_file https://www.encodeproject.org/files/ENCFF409ZRS/@@download/ENCFF409ZRS.hic \
 --juicebox "java -jar juicer_tools_2.13.06.jar" \
@@ -122,6 +123,7 @@ python code/Hi_C/compute_powerlaw_fit_from_hic.py \
 - Step 3. Make average Hi-C
 
 ```
+# chromosome = ['chr' + str(x) for x in range(1,20)] + ['chrX']
 python code/Hi_C/makeAverageHiC.py \
 --celltypes ESC1,ESC2,CH12F3,B,CH12LX,fiber,epi \
 --chromosome chr1 \
