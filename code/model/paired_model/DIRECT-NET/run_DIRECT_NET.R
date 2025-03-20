@@ -26,11 +26,11 @@ pbmc[["ATAC"]] <- pbmc[["peaks"]]
 pbmc@reductions$wnn.umap<-pbmc@reductions$umap 
 
 #run model(only Seurat V4)
-#pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = FALSE, genome.info = genome.info, focus_markers = focus_markers)
+#pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = TRUE, genome.info = genome.info, focus_markers = focus_markers)
 
 #if Seurat V5 and we need promoter:1000bp upstream and downstream of gene transcription start site(TSS),modify code(directnet.R')
 source('directnet.R')
-pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = FALSE, genome.info = genome.info, focus_markers = focus_markers)
+pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = TRUE, genome.info = genome.info, focus_markers = focus_markers)
 
 direct.net_result <- Misc(pbmc, slot = 'direct.net')
 direct.net_result <- as.data.frame(do.call(cbind,direct.net_result)) # links for markers
