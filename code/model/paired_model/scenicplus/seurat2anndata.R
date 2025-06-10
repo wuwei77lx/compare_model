@@ -1,4 +1,4 @@
-# checks if certain columns of a dataframe is of a single value and drop them if required
+# Helper function: removes columns in a data.frame that contain only a single unique value
 .regularise_df <- function(df, drop_single_values = TRUE) {
   if (ncol(df) == 0) df[["name"]] <- rownames(df)
   if (drop_single_values) {
@@ -15,7 +15,7 @@
   return(df)
 }
 
-#converts a Seurat object to an Anndata object
+# Main function: converts a Seurat object to an AnnData object
 seurat2anndata<- function(obj, outFile = NULL, assay = "RNA", main_layer = "data", transfer_layers = NULL, drop_single_values = TRUE) {
   if (!requireNamespace("Seurat")) {
     stop("This function requires the 'Seurat' package.")
