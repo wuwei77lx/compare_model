@@ -1,33 +1,37 @@
 rm(list=ls())
-# load the required libraries
+
+# Load required libraries
 library(cicero)
 library(Signac)
 library(Seurat)
 library(SCEGHiC)
 
-# load data(remain ATAC data)
-pbmc<-readRDS("pbmc_multiomic.rds")
+# Load multiomic PBMC dataset (remain ATAC data)
+pbmc <- readRDS("PBMC_multiomic.rds")
+DefaultAssay(pbmc) <- "peaks"
+pbmc@assays$RNA <- NULL
+pbmc<-RunUMAP(pbmc, reduction = 'lsi', dims = 2:40)
 
-# data preprocessing(aggregate)-reference SCEGHiC
+# Data preprocessing - aggregation for SCEGHiC reference
 agg.data <- process_data(pbmc, max_overlap = 0.5)
 
-#remain ATAC data
+# Remain ATAC data
 atac<-agg.data[["atac"]]
 atac<-atac[rowSums(atac)!=0,]
 rownames(atac) <- gsub("-", "_", rownames(atac))
 
-# load annotate transcription start sites(TSS)
+# Load transcription start sites (TSS) annotation for human hg38
 tssdata <- annotateTSS("Homo sapiens", "hg38")
 
-# select highly variable features
+# Select highly variable features
 focus_markers=pbmc@assays[["SCT"]]@var.features
 focus_markers<-intersect(focus_markers,tssdata$TargetGene)
 
-# peak info 
+# Peak info: convert "-" to "_" to match naming convention 
 peak<-pbmc@assays[["peaks"]]@counts@Dimnames[[1]]
 peak<-gsub("-","_",peak)
 
-# pearson
+# Calculate Pearson correlations between gene expression and peaks in ±250 kb window
 results<-list()
 for(n in 1:length(focus_markers)){
   G=focus_markers[n]
@@ -57,6 +61,8 @@ for(n in 1:length(focus_markers)){
   }
   print(n)
 }
-results<-do.call(rbind,results)
+# Combine results for all genes
+results <- do.call(rbind, results)
 
-save(results,file="pearson_pbmc_peak_gene_scATAC.rda")
+# Save results
+save(results,file="Pearson_PBMC_peak_gene_scATAC.rda")
