@@ -29,6 +29,9 @@ pbmc[["ATAC"]] <- pbmc[["peaks"]]
 pbmc@reductions$wnn.umap <- pbmc@reductions$umap
 # Make sure 'umap' is WNN-based UMAP; otherwise, this might cause issues
 
+# Run model (only Seurat V4)
+# pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = TRUE, genome.info = genome.info, focus_markers = focus_markers)
+
 # Source the modified directnet.R (for Seurat v5 compatibility)
 source('directnet.R')
 
