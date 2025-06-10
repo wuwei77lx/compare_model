@@ -52,4 +52,4 @@ if ("function_type" %in% colnames(direct.net_result)) {
 }
 
 # Save the result for future use
-save(direct.net_result, file="DIRECTNET_pbmc_peak_gene.rda")
+save(direct.net_result, file="DIRECTNET_PBMC_peak_gene.rda")
