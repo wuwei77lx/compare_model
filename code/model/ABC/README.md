@@ -1,4 +1,4 @@
-# ABC model
+# Activity-by-contact (ABC) model
 
 ## Introduction
 This directory primarily contains two components:
