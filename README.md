@@ -98,47 +98,8 @@ Table 3 below shows **the sources of mouse Hi-C datasets used to generate the av
 | Fiber                                      | GSE243851   | https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE243851&format=file&file=GSE243851%5Ffiber%5Fboth%5Fsamples%5Finter%5F30%2Ehic |
 
 
-**Generating the average Hi-C consists of the following steps (```|-- code/Hi_C```)**:
-
-1. Download the Hi-C matrix files from Juicebox (in .hic format).
-
-2. Fit each Hi-C dataset to a power-law model to extract the decay parameters.
-
-3. Generate the average Hi-C.
-
-- Step 1. Download .hic matrix files for all selected cell types from Juicebox.
-  
-```
-wget https://github.com/aidenlab/Juicebox/releases/download/v2.13.06/juicer_tools_2.13.06.jar
-
-# hic_file can use local files to save time
-python code/model/ABC/juicebox_dump.py \
---hic_file https://www.encodeproject.org/files/ENCFF409ZRS/@@download/ENCFF409ZRS.hic \
---juicebox "java -jar juicer_tools_2.13.06.jar" \
---resolution 5000 \
---outdir mouse_contact/ESC1
-```
-
-- Step 2. Fit Hi-C contact frequency data to a power-law model and extract the corresponding parameters.
-
-```
-python code/model/ABC/compute_powerlaw_fit_from_hic.py \
---hic_dir mouse_contact/ESC1 \
---outDir mouse_contact/ESC1/powerlaw \
---hic_resolution 5000
-```
-
-
-- Step 3. Generate the average Hi-C.
-
-```
-# chromosome = ['chr' + str(x) for x in range(1,20)] + ['chrX']
-python code/model/ABC/makeAverageHiC.py \
---celltypes ESC1,ESC2,CH12F3,B,CH12LX,fiber,epi \
---chromosome chr1 \
---basedir mouse_contact \
---outDir mouse_contact/average_HiC
-```
+For detailed steps on generating the average Hi-C, please refer to the scripts and documentation at:
+https://github.com/wuwei77lx/compare_model/blob/main/code/model/ABC/README.md
 
 **The mouse average Hi-C data (~13.9 GB) can be downloaded from**: [10.5281/zenodo.14849886](https://zenodo.org/record/14849886).
 
@@ -160,7 +121,6 @@ scEChIA: Pandey, N., Omkar Chandra, Mishra, S., & Kumar, V. (2021). Improving Ch
 
 ABC: Fulco CP, Nasser J, Jones TR, Munson G, Bergman DT, Subramanian V, Grossman SR, Anyoha R, Doughty BR, Patwardhan TA, Nguyen TH, Kane M, Perez EM, Durand NC, Lareau CA, Stamenova EK, Aiden EL, Lander ES & Engreitz JM. Activity-by-contact model of enhancer–promoter regulation from thousands of CRISPR perturbations. Nat. Genet. 51, 1664–1669 (2019). https://www.nature.com/articles/s41588-019-0538-0
 
-Nasser, J., Bergman, D. T., Fulco, C. P., Guckelberger, P., Doughty, B. R., Patwardhan, T. A., Jones, T. R., Nguyen, T. H., Ulirsch, J. C., Lekschas, F., Mualim, K., Natri, H. M., Weeks, E. M., Munson, G., Kane, M., Kang, H. Y., Cui, A., Ray, J. P., Eisenhaure, T. M., Collins, R. L., … Engreitz, J. M. (2021). Genome-wide enhancer maps link risk variants to disease genes. Nature, 593(7858), 238–243. https://doi.org/10.1038/s41586-021-03446-x
 
 ## Contact
 If you have any problems, comments or suggestions, please contact us at XuanLiang (<liangxuan2022@sinh.ac.cn>).
