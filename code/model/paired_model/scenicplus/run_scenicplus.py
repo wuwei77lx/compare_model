@@ -1,4 +1,4 @@
-# import libraries
+# Import libraries
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 import sys
@@ -7,19 +7,19 @@ import pickle
 import rpy2.robjects as robjects
 robjects.r('library(Matrix)')
 
-# preprocess scATAC-seq data using pycisTopic
+# Preprocess scATAC-seq data using pycisTopic
 from pycisTopic.cistopic_class import *
-count_matrix=pd.read_csv('pbmccount.tsv', sep='\t')
+count_matrix=pd.read_csv('PBMCcount.tsv', sep='\t')
 
-# creating a cisTopic object(removed blacklist regions)
+# Creating a cisTopic object(removed blacklist regions)
 path_to_blacklist='hg38-blacklist.v2.bed'
 cistopic_obj = create_cistopic_object(fragment_matrix=count_matrix, path_to_blacklist=path_to_blacklist)
 
-# adding metadata to a cisTopic object
+# Adding metadata to a cisTopic object
 cell_data =  pd.read_csv('celltype.tsv', sep='\t')
 cistopic_obj.add_cell_data(cell_data)
 
-# save a cisTopic object
+# Save a cisTopic object
 work_dir="scenicplus"
 if not os.path.exists(os.path.join(work_dir, 'scATAC')):
     os.makedirs(os.path.join(work_dir, 'scATAC'))
@@ -29,10 +29,10 @@ pickle.dump(cistopic_obj,
             open(os.path.join(work_dir, 'scATAC/cistopic_obj.pkl'), 'wb'))
 
 
-# load a cisTopic object
+# Load a cisTopic object
 cistopic_obj = pickle.load(open(os.path.join(work_dir, 'scATAC/cistopic_obj.pkl'), 'rb'))
 
-# run models
+# Run models
 models=run_cgs_models(cistopic_obj,
                     n_topics=[2,4,10,16,32,48],
                     n_cpu=5,
@@ -45,7 +45,7 @@ models=run_cgs_models(cistopic_obj,
                     save_path=None,
                     _temp_dir = '/picb/bigdata/project/liangxuan/temopory')
 
-# save models results
+# Save models results
 if not os.path.exists(os.path.join(work_dir, 'scATAC/models')):
     os.makedirs(os.path.join(work_dir, 'scATAC/models'))
 
@@ -53,7 +53,7 @@ pickle.dump(models,
             open(os.path.join(work_dir, 'scATAC/models/10x_pbmc_models_500_iter_LDA.pkl'), 'wb'))
 
 
-# model selection
+# Model selection
 models = pickle.load(open(os.path.join(work_dir, 'scATAC/models/10x_pbmc_models_500_iter_LDA.pkl'), 'rb'))
 from pycisTopic.lda_models import *
 model = evaluate_models(models,
@@ -65,12 +65,12 @@ cistopic_obj.add_LDA_model(model)
 pickle.dump(cistopic_obj,
             open(os.path.join(work_dir, 'scATAC/cistopic_obj.pkl'), 'wb'))
 
-# clustering and visualization
+# Clustering and visualization
 from pycisTopic.clust_vis import *
 run_umap(cistopic_obj, target  = 'cell', scale=True)
 plot_metadata(cistopic_obj, reduction_name = 'UMAP', variables = ['celltype'])
 
-# topic binarization 
+# Topic binarization 
 from pycisTopic.topic_binarization import *
 region_bin_topics_otsu = binarize_topics(cistopic_obj, method='otsu')
 region_bin_topics_top3k = binarize_topics(cistopic_obj, method='ntop', ntop = 3000)
@@ -82,7 +82,7 @@ normalized_imputed_acc_obj = normalize_scores(imputed_acc_obj, scale_factor=10**
 variable_regions = find_highly_variable_features(normalized_imputed_acc_obj, plot = False)
 markers_dict = find_diff_features(cistopic_obj, imputed_acc_obj, variable='celltype', var_features=variable_regions, split_pattern = '-')
 
-# save region sets
+# Save region sets
 if not os.path.exists(os.path.join(work_dir, 'scATAC/candidate_enhancers')):
     os.makedirs(os.path.join(work_dir, 'scATAC/candidate_enhancers'))
 
@@ -92,14 +92,14 @@ pickle.dump(region_bin_topics_top3k, open(os.path.join(work_dir, 'scATAC/candida
 pickle.dump(markers_dict, open(os.path.join(work_dir, 'scATAC/candidate_enhancers/markers_dict.pkl'), 'wb'))
 
 
-# generate a custom cisTarget database
+# Generate a custom cisTarget database
 
-# load pycisTopic region sets
+# Load pycisTopic region sets
 region_bin_topics_otsu = pickle.load(open(os.path.join(work_dir, 'scATAC/candidate_enhancers/region_bin_topics_otsu.pkl'), 'rb'))
 region_bin_topics_top3k = pickle.load(open(os.path.join(work_dir, 'scATAC/candidate_enhancers/region_bin_topics_top3k.pkl'), 'rb'))
 markers_dict = pickle.load(open(os.path.join(work_dir, 'scATAC/candidate_enhancers/markers_dict.pkl'), 'rb'))
 
-# prepare region sets
+# Prepare region sets
 import pyranges as pr
 from pycistarget.utils import region_names_to_coordinates
 region_sets = {}
@@ -120,14 +120,14 @@ for DAR in markers_dict.keys():
 
 
 
-# motif collection(motif can be downloaded from: https://resources.aertslab.org/cistarget/databases)
+# Motif collection(motif can be downloaded from: https://resources.aertslab.org/cistarget/databases)
 db_fpath = "/picb/bigdata/project/liangxuan"
 motif_annot_fpath = "/picb/bigdata/project/liangxuan"
 rankings_db = os.path.join(db_fpath, 'hg38_screen_v10_clust.regions_vs_motifs.rankings.feather')
 scores_db =  os.path.join(db_fpath, 'hg38_screen_v10_clust.regions_vs_motifs.scores.feather')
 motif_annotation = os.path.join(motif_annot_fpath, 'motifs-v10-nr.hgnc-m0.00001-o0.0.tbl')
 
-# create cistarget databases
+# Create cistarget databases
 if not os.path.exists(os.path.join(work_dir, 'motifs')):
     os.makedirs(os.path.join(work_dir, 'motifs'))
 
@@ -148,14 +148,14 @@ run_pycistarget(
 
 
 
-# preprocess scRNA-seq data using Scanpy
-# import libraries
+# Preprocess scRNA-seq data using Scanpy
+# Import libraries
 import pandas as pd
 import scanpy as sc
 import pandas as pd
 
-# load data
-adata = sc.read_h5ad('pbmc.h5ad')
+# Load data
+adata = sc.read_h5ad('PBMC.h5ad')
 
 # QC
 sc.pp.filter_cells(adata,min_genes=200)
@@ -165,11 +165,11 @@ sc.external.pp.scrublet(adata)
 adata.var['mt'] = adata.var_names.str.startswith('MT-')  
 sc.pp.calculate_qc_metrics(adata, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
 
-# visualization
+# Visualization
 sc.pl.umap(adata,color ='celltype')
 
-# select highly variable features
-gene=pd.read_csv("pbmc_gene.csv")
+# Select highly variable features
+gene=pd.read_csv("PBMC_gene.csv")
 gene1 = gene['x']
 gene2= ', '.join(gene1.astype(str))
 gene3=pd.Index(gene2.split(', '))
@@ -184,18 +184,18 @@ for gene in all_genes:
 
 adata = adata[:, gene_in_known_list]
 
-# save data
-adata.write( 'pbmc1.h5ad', compression='gzip')
+# Save data
+adata.write( 'PBMC1.h5ad', compression='gzip')
 
 
-# run SCENIC+ 
-# load data
+# Run SCENIC+ 
+# Load data
 import dill
-adata = sc.read_h5ad('pbmc1.h5ad')
+adata = sc.read_h5ad('PBMC1.h5ad')
 menr = dill.load(open('scenicplus/motifs/menr.pkl', 'rb'))
 cistopic_obj = dill.load(open('scenicplus/scATAC/cistopic_obj.pkl', 'rb'))
 
-# create a scenicplus object
+# Create a scenicplus object
 from scenicplus.scenicplus_class import create_SCENICPLUS_object
 import numpy as np
 scplus_obj = create_SCENICPLUS_object(
@@ -207,7 +207,7 @@ scplus_obj = create_SCENICPLUS_object(
 
 scplus_obj.dr_cell['GEX_X_pca'] = scplus_obj.dr_cell['GEX_X_pca'].iloc[:, 0:2]
 
-# run scenicplus
+# Run scenicplus
 from scenicplus.wrappers.run_scenicplus import run_scenicplus
 from scenicplus.enhancer_to_gene import get_search_space, calculate_regions_to_genes_relationships, GBM_KWARGS
 get_search_space(scplus_obj,
@@ -226,4 +226,4 @@ calculate_regions_to_genes_relationships(scplus_obj,
 
 df_interact=scplus_obj.uns['region_to_gene']
 
-df_interact.to_csv("scenicplus_pbmc_peak_gene.rda", index=False)
+df_interact.to_csv("scenicplus_PBMC_peak_gene.rda", index=False)
