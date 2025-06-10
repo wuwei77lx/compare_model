@@ -1,5 +1,6 @@
-rm(list=ls())
-# load the required libraries
+rm(list=ls())  # Clear workspace
+
+# Load required packages
 library(DIRECTNET)
 library(Signac)
 library(Seurat)
@@ -9,39 +10,47 @@ library(xgboost)
 library(ggplot2)
 library(cicero)
 
-# load data(remain ATAC data)
-pbmc<-readRDS("pbmc_multiomic.rds")
+# Load data (remain ATAC data)
+pbmc<-readRDS("PBMC_multiomic.rds")
 DefaultAssay(pbmc) <- "peaks"
 pbmc@assays$RNA <- NULL
 
+# Run UMAP on LSI dimensions 2 to 40
+pbmc<-RunUMAP(pbmc, reduction = 'lsi', dims = 2:40)
 
 
-# format genome.info
+# Load promoter regions annotation, expect 4 columns: chrom, start, end, gene
 genome.info <- read.table(file = "hg38.promoter.regions.txt")
 colnames(genome.info)<-c("Chrom","Starts","Ends","genes")
 
-# select highly variable features
+# Select highly variable genes from SCT assay
 focus_markers=pbmc@assays[["SCT"]]@var.features
+# Note: make sure SCTransform was run before, else this will be empty
 
-# note DIRECT-NET process 'ATAC' assay ,need 'peaks' assay
+# DIRECT-NET expects ATAC assay; copy peaks assay to ATAC
 pbmc[["ATAC"]] <- pbmc[["peaks"]]
+# Confirm that "peaks" assay exists and is formatted correctly
 
-# name of the model dimension is 'wnn.umap'
-pbmc@reductions$wnn.umap<-pbmc@reductions$umap 
+# Run model (only Seurat V4)
+# pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = TRUE, genome.info = genome.info, focus_markers = focus_markers)
 
-#run model(only Seurat V4)
-#pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = FALSE, genome.info = genome.info, focus_markers = focus_markers)
-
-#if Seurat V5 and we need promoter:1000bp upstream and downstream of gene transcription start site(TSS),modify code(directnet.R')
+# Source the modified directnet.R (for Seurat v5 compatibility)
 source('directnet.R')
-pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = FALSE, genome.info = genome.info, focus_markers = focus_markers)
+pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = TRUE, genome.info = genome.info, focus_markers = focus_markers)
 
-direct.net_result <- Misc(pbmc, slot = 'direct.net')
-direct.net_result <- as.data.frame(do.call(cbind,direct.net_result)) # links for markers
+# Extract direct.net results from pbmc Misc slot
+direct.net_result <- Misc(pbmc, slot='direct.net')
 
-# check the function type name
-direct.net_result$function_type <- gsub("HF","HC",direct.net_result$function_type)
-direct.net_result$function_type <- gsub("Rest","MC",direct.net_result$function_type)
-direct.net_result$function_type <- gsub("LF","LC",direct.net_result$function_type)
+# Combine list elements column-wise into one data.frame
+direct.net_result <- as.data.frame(do.call(cbind, direct.net_result))
+# Warning: ensure all elements have compatible row counts and types
 
-save(direct.net_result,file="DIRECTNET_pbmc_peak_gene_scATAC.rda")
+# Replace strings in function_type column
+if ("function_type" %in% colnames(direct.net_result)) {
+  direct.net_result$function_type <- gsub("HF","HC", direct.net_result$function_type)
+  direct.net_result$function_type <- gsub("Rest","MC", direct.net_result$function_type)
+  direct.net_result$function_type <- gsub("LF","LC", direct.net_result$function_type)
+}
+
+# Save the result for future use
+save(direct.net_result,file="DIRECTNET_PBMC_peak_gene_scATAC.rda")
