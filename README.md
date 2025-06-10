@@ -15,8 +15,8 @@ We evaluated and applied the model using a total of five human paired scRNA-seq 
 We provided code for predicting peak-gene models using single-cell omics data. The directory ```|-- code/model/paired_model``` includes methods for predicting gene-peak models from paired scRNA-seq and scATAC-seq data, such as Pearson, Spearman, CellOracle, DIRECT-NET, SCENIC+, FigR, and Signac. The directory ```|-- code/model/only_scATAC_model``` includes methods for predicting peak-gene models using scATAC-seq data alone, including Cicero, DIRECT-NET, chi2+FDR, scEChIA, and Pearson. The directory ```|-- code/model/ABC``` contains a method for predicting peak-gene models using the ABC model.
 
 `NOTE`:
-- Promoter: 1,000 bp upstream and downstream of the gene transcription start site (TSS).
-- Enhancer: 250 kb upstream and downstream of the gene TSS.
+- **Promoter**: 1,000 bp upstream and downstream of the gene transcription start site (TSS).
+- **Enhancer**: 250 kb upstream and downstream of the gene TSS.
 
 Table 1 below shows **information on predicting peak-gene models from paired scRNA-seq and scATAC-seq data**.
 
@@ -144,7 +144,7 @@ python code/model/ABC/makeAverageHiC.py \
 
 ## Reference
 
-cellOracle: Kamimoto, K., Stringa, B., Hoffmann, C. M., Jindal, K., Solnica-Krezel, L., & Morris, S. A. (2023). Dissecting cell identity via network inference and in silico gene perturbation. Nature, 614(7949), 742–751. https://doi.org/10.1038/s41586-022-05688-9
+CellOracle: Kamimoto, K., Stringa, B., Hoffmann, C. M., Jindal, K., Solnica-Krezel, L., & Morris, S. A. (2023). Dissecting cell identity via network inference and in silico gene perturbation. Nature, 614(7949), 742–751. https://doi.org/10.1038/s41586-022-05688-9
 
 DIRECT-NET: Zhang, L., Zhang, J., & Nie, Q. (2022). DIRECT-NET: An efficient method to discover cis-regulatory elements and construct regulatory networks from single-cell multiomics data. Science advances, 8(22), eabl7393. https://doi.org/10.1126/sciadv.abl7393
 
@@ -154,7 +154,7 @@ FigR: Kartha, V. K., Duarte, F. M., Hu, Y., Ma, S., Chew, J. G., Lareau, C. A., 
 
 Signac:Stuart, T., Srivastava, A., Madad, S., Lareau, C. A., & Satija, R. (2021). Single-cell chromatin state analysis with Signac. Nature methods, 18(11), 1333–1341. https://doi.org/10.1038/s41592-021-01282-5
 
-cicero: Pliner, H. A., Packer, J. S., McFaline-Figueroa, J. L., Cusanovich, D. A., Daza, R. M., Aghamirzaie, D., Srivatsan, S., Qiu, X., Jackson, D., Minkina, A., Adey, A. C., Steemers, F. J., Shendure, J., & Trapnell, C. (2018). Cicero Predicts cis-Regulatory DNA Interactions from Single-Cell Chromatin Accessibility Data. Molecular cell, 71(5), 858–871.e8. https://doi.org/10.1016/j.molcel.2018.06.044
+Cicero: Pliner, H. A., Packer, J. S., McFaline-Figueroa, J. L., Cusanovich, D. A., Daza, R. M., Aghamirzaie, D., Srivatsan, S., Qiu, X., Jackson, D., Minkina, A., Adey, A. C., Steemers, F. J., Shendure, J., & Trapnell, C. (2018). Cicero Predicts cis-Regulatory DNA Interactions from Single-Cell Chromatin Accessibility Data. Molecular cell, 71(5), 858–871.e8. https://doi.org/10.1016/j.molcel.2018.06.044
 
 scEChIA: Pandey, N., Omkar Chandra, Mishra, S., & Kumar, V. (2021). Improving Chromatin-Interaction Prediction Using Single-Cell Open-Chromatin Profiles and Making Insight Into the Cis-Regulatory Landscape of the Human Brain. Frontiers in genetics, 12, 738194. https://doi.org/10.3389/fgene.2021.738194
 
