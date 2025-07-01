@@ -129,7 +129,7 @@ chrom <- read.table("hg19.chrom.sizes.txt")
 # Initialize list to hold predicted interactions per chromosome
 predicted_interaction <- list()
 
-# Loop through chromosomes 1-22 to predict peak-gene interactions
+# Loop through chromosomes 1-22 to predict peak-gene links
 for(i in 1:22) {
   chr <- paste0("chr", i)
   
