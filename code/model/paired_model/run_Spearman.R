@@ -6,7 +6,7 @@ library(Signac)
 library(Seurat)
 library(SCEGHiC)
 
-# Load PBMC multiomic dataset
+# Load PBMC multi-omics dataset
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Preprocess data for SCEGHiC (aggregating cells)
