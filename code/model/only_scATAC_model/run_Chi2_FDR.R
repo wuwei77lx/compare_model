@@ -6,7 +6,7 @@ library(Signac)
 library(Seurat)
 library(SCEGHiC)
 
-# Load PBMC multiomic data
+# Load PBMC multi-omics data
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Subset for specific cell type, e.g., CD8+ T cells
