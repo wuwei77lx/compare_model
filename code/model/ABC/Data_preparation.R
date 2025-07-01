@@ -8,7 +8,7 @@ library(Seurat)
 library(SCEGHiC)
 library(cicero)
 
-# Load multi-omic PBMC dataset
+# Load multi-omics PBMC dataset
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Create transcript database using UCSC hg38 refGene table
@@ -55,7 +55,7 @@ peak <- gsub("-", "_", peak)
 promoter <- list()
 enhancer <- list()
 
-# Loop over genes to define promoter (±1 kb) and enhancer (±250 kb) windows
+# Loop over genes to define promoter (± 1 kb) and enhancer (± 250 kb) windows
 for(n in seq_along(genes)) {
   G <- genes[n]
   chr <- tssdata[which(G == tssdata$TargetGene), ]$chr
