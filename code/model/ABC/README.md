@@ -3,7 +3,7 @@
 ## Introduction
 This directory primarily contains two components:
 
-1. **Running the ABC model**: Scripts and resources for applying the ABC model to predict enhancer–gene interactions.
+1. **Running the ABC model**: Scripts and resources for applying the ABC model to predict enhancer–gene links.
 
 2. **Mouse average Hi-C data generation**: Step-by-step scripts for processing multiple mouse Hi-C datasets and generating a bulk average Hi-C data.
 
@@ -18,7 +18,7 @@ This directory primarily contains two components:
 
 ### Step 1. Generate required input files
 
-Prepare ```EnhancerList.txt``` and ```GeneList.txt``` from paired scRNA-seq and scATAC-seq data. We first summarized gene expression and chromatin accessibility for each cell type. Peaks were annotated using ChIPseeker and categorized as “Promoter,” “Distal Intergenic,” or “Others” based on their genomic locations relative to the TSS. See the code in ```|-- code/model/ABC/Data_preparation```.
+Prepare ```EnhancerList.txt``` and ```GeneList.txt``` from paired scATAC-seq/RNA-seq data. We first summarized gene expression and chromatin accessibility for each cell type. Peaks were annotated using ChIPseeker and categorized as “Promoter,” “Distal Intergenic,” or “Others” based on their genomic locations relative to the TSS. See the code in ```|-- code/model/ABC/Data_preparation```.
 
 Main output files:
 
