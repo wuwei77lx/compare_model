@@ -5,7 +5,7 @@ library(Seurat)
 library(Signac)
 library(BSgenome.Hsapiens.UCSC.hg38)
 
-# Load multiomic PBMC dataset
+# Load multi-omics PBMC dataset
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Set the default assay to ATAC peaks
