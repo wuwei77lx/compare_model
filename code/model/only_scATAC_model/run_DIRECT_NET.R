@@ -31,7 +31,7 @@ focus_markers=pbmc@assays[["SCT"]]@var.features
 pbmc[["ATAC"]] <- pbmc[["peaks"]]
 # Confirm that "peaks" assay exists and is formatted correctly
 
-# Run model (only Seurat V4)
+# Run model (only Seurat v4)
 # pbmc <- Run_DIRECT_NET(pbmc, peakcalling = FALSE, k_neigh = 50, atacbinary = TRUE, max_overlap=0.5, size_factor_normalize = TRUE, genome.info = genome.info, focus_markers = focus_markers)
 
 # Source the modified directnet.R (for Seurat v5 compatibility)
