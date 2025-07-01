@@ -11,7 +11,7 @@ library(rtracklayer)
 library(reshape2)
 library(magrittr)
 
-# Load multi-omic PBMC dataset
+# Load multi-omics PBMC dataset
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Extract peak count matrix from "peaks" assay
