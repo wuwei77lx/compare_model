@@ -14,7 +14,7 @@ library(SCEGHiC)
 library(Seurat)
 library(dplyr)
 
-# Load PBMC multiomic data
+# Load PBMC multi-omics data
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Annotate transcription start sites (TSS) for hg38
@@ -31,7 +31,7 @@ peak <- gsub("-", "_", peak)
 promoter <- list()
 enhancer <- list()
 
-# For each gene, define promoter (±1kb) and enhancer (±250kb) regions and find overlapping peaks
+# For each gene, define promoter (± 1kb) and enhancer (± 250kb) regions and find overlapping peaks
 for(n in seq_along(genes)) {
   G <- genes[n]
   chr <- tssdata[which(G == tssdata$TargetGene), ]$chr
