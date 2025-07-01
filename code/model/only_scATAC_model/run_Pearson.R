@@ -6,7 +6,7 @@ library(Signac)
 library(Seurat)
 library(SCEGHiC)
 
-# Load multiomic PBMC dataset (remain ATAC data)
+# Load multi-omics PBMC dataset (remain ATAC data)
 pbmc <- readRDS("PBMC_multiomic.rds")
 DefaultAssay(pbmc) <- "peaks"
 pbmc@assays$RNA <- NULL
@@ -31,7 +31,7 @@ focus_markers<-intersect(focus_markers,tssdata$TargetGene)
 peak<-pbmc@assays[["peaks"]]@counts@Dimnames[[1]]
 peak<-gsub("-","_",peak)
 
-# Calculate Pearson correlations between gene expression and peaks in ±250 kb window
+# Calculate Pearson correlation between gene expression and peaks in ± 250 kb window
 results<-list()
 for(n in 1:length(focus_markers)){
   G=focus_markers[n]
