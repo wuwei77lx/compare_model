@@ -6,7 +6,7 @@ library(Seurat)
 library(SCEGHiC)
 library(reader)
 
-# Load PBMC multiomic dataset containing scRNA-seq and scATAC-seq data
+# Load PBMC multi-omics dataset
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Annotate transcription start sites (TSS) for human genome (hg38)
@@ -21,7 +21,7 @@ peakinfo <- data.frame(chr = split_peaks[, 1],
 peakinfo$name <- peak  # Assign peak names
 
 # -----------------------------------
-# Prepare Hi-C contact-based truth for CD8 T cells
+# Prepare Hi-C contact-based truth for CD8+ T cells
 # Hi-C data source: [ENCODE database](https://www.encodeproject.org/files/ENCFF009ONH/@@download/ENCFF009ONH.hic)
 # Juicer tools command example provided in comments to extract 5kb resolution contacts for each chromosome
 # wget https://github.com/aidenlab/Juicebox/releases/download/v2.13.06/juicer_tools_2.13.06.jar
