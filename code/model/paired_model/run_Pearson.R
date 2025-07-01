@@ -6,7 +6,7 @@ library(Signac)
 library(Seurat)
 library(SCEGHiC)
 
-# Load multiomic PBMC dataset
+# Load multi-omics PBMC dataset
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Data preprocessing - aggregation for SCEGHiC reference
@@ -29,7 +29,7 @@ rna2 <- rna1[apply(rna1, 1, function(x) { sum(x != 0) > 2 }), ]  # keep genes ex
 peak <- pbmc@assays[["peaks"]]@counts@Dimnames[[1]]
 peak <- gsub("-", "_", peak)
 
-# Calculate Pearson correlations between gene expression and peaks in ±250 kb window
+# Calculate Pearson correlations between gene expression and peaks in ± 250 kb window
 results <- list()
 for (n in 1:nrow(rna2)) {
   G <- rownames(rna2)[n]
@@ -39,7 +39,7 @@ for (n in 1:nrow(rna2)) {
   chr <- tssdata[which(G == tssdata$TargetGene), ]$chr
   start <- tssdata[which(G == tssdata$TargetGene), ]$TargetGeneTSS
   
-  # Define promoter region ±1 kb around TSS
+  # Define promoter region ± 1 kb around TSS
   p1 <- paste0(chr, ":", max(start - 1000, 0), "-", start + 1000)
   # Define enhancer search window ±250 kb around TSS
   p2 <- paste0(chr, ":", max(start - 250000, 0), "-", start + 250000)
