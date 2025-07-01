@@ -30,8 +30,8 @@ AUP <- function(predicted, ground_truth) {
 
 
 # Early precision
-#' @param predicted A data frame containing predicted peak-gene interactions with columns: gene, peak, score
-#' @param ground_truth A data frame containing ground truth interactions with binary score column: 1 (positive), 0 (negative)
+#' @param predicted A data frame containing predicted peak-gene links with columns: gene, peak, score
+#' @param ground_truth A data frame containing experimentally supported interactions with binary score column: 1 (positive), 0 (negative)
 #' @return Early precision score
 EPR <- function(predicted, ground_truth) {
   # k = number of true peak-gene links
