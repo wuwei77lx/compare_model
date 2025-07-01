@@ -5,7 +5,7 @@ library(Seurat)
 library(Signac)
 library(FigR)
 
-# Load multiomic PBMC dataset
+# Load multi-omics PBMC dataset
 pbmc <- readRDS("PBMC_multiomic.rds")
 
 # Function to convert Seurat ATAC assay to SummarizedExperiment for FigR
@@ -46,7 +46,7 @@ cisCor <- runGenePeakcorr(
   p.cut = NULL                        # No p-value cutoff here; will filter later
 )
 
-# Filter significant correlations by p-value (select)
+# Filter significant links by p-value (select)
 cisCor.filt <- cisCor %>% dplyr::filter(pvalZ <= 0.05)
 
 # Save results
