@@ -226,4 +226,5 @@ calculate_regions_to_genes_relationships(scplus_obj,
 
 df_interact=scplus_obj.uns['region_to_gene']
 
-df_interact.to_csv("scenicplus_PBMC_peak_gene.rda", index=False)
+df_interact.to_csv("scenicplus_PBMC_peak_gene.csv", index=False)
+
