@@ -25,9 +25,7 @@ gene1 <- intersect(gene, tssdata$TargetGene)
 rna1 <- rna[which(rownames(rna) %in% gene1), ]
 rna2 <- rna1[apply(rna1, 1, function(x) { sum(x != 0) > 2 }), ]  # keep genes expressed in >2 cells
 
-# Peak info: convert "-" to "_" to match naming convention
-peak <- pbmc@assays[["peaks"]]@counts@Dimnames[[1]]
-peak <- gsub("-", "_", peak)
+peak <- rownames(atac)
 
 # Calculate Pearson correlations between gene expression and peaks in ± 250 kb window
 results <- list()
@@ -75,3 +73,4 @@ results <- do.call(rbind, results)
 
 # Save results
 save(results, file = "Pearson_PBMC_peak_gene.rda")
+
