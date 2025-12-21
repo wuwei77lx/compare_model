@@ -33,9 +33,7 @@ rna1 <- rna[which(rownames(rna) %in% gene1), ]
 # Filter genes expressed in more than 2 cells
 rna2 <- rna1[apply(rna1, 1, function(x) { sum(x != 0) > 2 }), ]
 
-# Get peak names and replace "-" with "_"
-peak <- pbmc@assays[["peaks"]]@counts@Dimnames[[1]]
-peak <- gsub("-", "_", peak)
+peak <- rownames(atac)
 
 # Initialize list to store results
 results <- list()
@@ -88,3 +86,4 @@ results <- do.call(rbind, results)
 
 # Save to file
 save(results, file = "Spearman_PBMC_peak_gene.rda")
+
