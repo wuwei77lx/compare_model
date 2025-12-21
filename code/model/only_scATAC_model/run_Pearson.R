@@ -27,9 +27,7 @@ tssdata <- annotateTSS("Homo sapiens", "hg38")
 focus_markers=pbmc@assays[["SCT"]]@var.features
 focus_markers<-intersect(focus_markers,tssdata$TargetGene)
 
-# Peak info: convert "-" to "_" to match naming convention 
-peak<-pbmc@assays[["peaks"]]@counts@Dimnames[[1]]
-peak<-gsub("-","_",peak)
+peak <- rownames(atac)
 
 # Calculate Pearson correlation between gene expression and peaks in ± 250 kb window
 results<-list()
@@ -66,3 +64,4 @@ results <- do.call(rbind, results)
 
 # Save results
 save(results,file="Pearson_PBMC_peak_gene_scATAC.rda")
+
