@@ -52,4 +52,9 @@ clusters<-data.frame(celID=colnames(pbmc),clusterID=as.character(Idents(pbmc)))
 clusters$clusterID <- gsub("[ -]", "_", clusters$clusterID)
 write.csv(clusters,
           file = "clusters.csv",
+
           quote = FALSE, row.names = FALSE)
+
+# If batch information is available, create a covariate table for cells to account for batch effects in downstream analyses
+# cov<-data.frame(celID=colnames(pbmc),batch=as.character(pbmc$batch))
+# write.csv(cov,file = "cov.csv",quote = FALSE, row.names = FALSE)
