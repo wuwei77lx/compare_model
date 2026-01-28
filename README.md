@@ -4,7 +4,7 @@
 
 We present a novel model, SCEG-HiC, which predicts links between genes and enhancers by integrating multi-omics sequencing data (paired scATAC-seq/RNA-seq or scATAC-seq alone) with three-dimensional chromatin conformation data (bulk average Hi-C). Our approach employs the weighted graphical lasso (wglasso) model to incorporate average bulk Hi-C data, effectively regularizing the correlation matrix with the prior Hi-C contact matrix as a penalty term.
 
-To validate the accuracy of peak-gene links predicted by SCEG-HiC, we benchmarked its predictions against other tools that infer peak-gene links using single-cell omics data. For paired scATAC-seq/RNA-seq data, we compared SCEG-HiC with Pearson, Spearman, CellOracle, DIRECT-NET, SCENIC+, FigR, and Signac. For scATAC-seq data alone, we compared it with Cicero, DIRECT-NET, chi-squared test with FDR correction (Chi2+FDR), scEChIA, and Pearson. Since SCEG-HiC employs a strategy similar to the activity-by-contact (ABC) model by using bulk average Hi-C data instead of cell type-specific Hi-C, we also included ABC in the comparison. The accuracy of predicted peak-gene links was evaluated using both cell type-specific Hi-C and eQTL data.
+To validate the accuracy of peak-gene links predicted by SCEG-HiC, we benchmarked its predictions against other tools that infer peak-gene links using single-cell omics data. For paired scATAC-seq/RNA-seq data, we compared SCEG-HiC with Pearson, Spearman, CellOracle, DIRECT-NET, SCENIC+, FigR, Signac, SCARlink, Enhlink, and scMultiMap. For scATAC-seq data alone, we compared it with Cicero, DIRECT-NET, chi-squared test with FDR correction (Chi2+FDR), scEChIA, Pearson and Enhlink. Since SCEG-HiC employs a strategy similar to the activity-by-contact (ABC) model by using bulk average Hi-C data instead of cell type-specific Hi-C, we also included ABC in the comparison. The accuracy of predicted peak-gene links was evaluated using both cell type-specific Hi-C and eQTL data.
 
 ## Download data 
 
@@ -12,7 +12,7 @@ We evaluated and applied the model using a total of five human paired scATAC-seq
 
 ## Predict peak-gene model
 
-We provided code for predicting peak-gene models using single-cell omics data. The directory ```|-- code/model/paired_model``` includes methods for predicting gene-peak models from paired scATAC-seq/RNA-seq data, such as Pearson, Spearman, CellOracle, DIRECT-NET, SCENIC+, FigR, and Signac. The directory ```|-- code/model/only_scATAC_model``` includes methods for predicting peak-gene models using scATAC-seq data alone, including Cicero, DIRECT-NET, Chi2+FDR, scEChIA, and Pearson. The directory ```|-- code/model/ABC``` contains a method for predicting peak-gene models using the ABC model.
+We provided code for predicting peak-gene models using single-cell omics data. The directory ```|-- code/model/paired_model``` includes methods for predicting gene-peak models from paired scATAC-seq/RNA-seq data, such as Pearson, Spearman, CellOracle, DIRECT-NET, SCENIC+, FigR, Signac, SCARlink, Enhlink, and scMultiMap.. The directory ```|-- code/model/only_scATAC_model``` includes methods for predicting peak-gene models using scATAC-seq data alone, including Cicero, DIRECT-NET, Chi2+FDR, scEChIA, Pearson and Enhlink. The directory ```|-- code/model/ABC``` contains a method for predicting peak-gene models using the ABC model.
 
 `NOTE`:
 - **Promoter**: 1 kp upstream and downstream of the gene transcription start site (TSS).
@@ -20,29 +20,33 @@ We provided code for predicting peak-gene models using single-cell omics data. T
 
 Table 1 below shows **information on predicting peak-gene models from scATAC-seq/RNA-seq**.
 
-| Model       | Platform  | method          | URL                                                   |
-| ----------- | --------- | --------------- | ----------------------------------------------------- |
-| Pearson     | R         | Pearson         |                                                       |
-| Spearman    | R         | Spearman        |                                                       |
-| CellOracle  | R; Python | Cicero (glasso) | https://github.com/morris-lab/CellOracle              |
-| DIRECT-NET  | R         | XGBooset        | https://github.com/zhanglhbioinfor/DIRECT-NET         |
-| SCENIC+     | R; Python | Spearman; GBM   | https://github.com/aertslab/scenicplus                |
-| FigR        | R         | Spearman        | https://github.com/buenrostrolab/FigR                 |
-| Siganc      | R         | Pearson         | https://github.com/stuart-lab/signac                  |
-| SCEG-HiC    | R         | wglasso         | https://github.com/wuwei77lx/SCEGHiC                  |
+| Model       | Platform  | method                | URL                                                   |
+| ----------- | --------- | --------------------- | ----------------------------------------------------- |
+| Pearson     | R         | Pearson               |                                                       |
+| Spearman    | R         | Spearman              |                                                       |
+| CellOracle  | R; Python | Cicero (glasso)       | https://github.com/morris-lab/CellOracle              |
+| DIRECT-NET  | R         | XGBooset              | https://github.com/zhanglhbioinfor/DIRECT-NET         |
+| SCENIC+     | R; Python | Spearman; GBM         | https://github.com/aertslab/scenicplus                |
+| FigR        | R         | Spearman              | https://github.com/buenrostrolab/FigR                 |
+| Siganc      | R         | Pearson               | https://github.com/stuart-lab/signac                  |
+| SCARlink    | R; Python | Poisson regression    | https://github.com/snehamitra/SCARlink                |
+| Enhlink     | R; Python | Random forest-like    | https://gitlab.com/Grouumf/enhlinktools               |
+| scMultiMap  | R         | Joint latent variable | https://github.com/ChangSuBiostats/scMultiMap         |
+| SCEG-HiC    | R         | wglasso               | https://github.com/wuwei77lx/SCEGHiC                  |
 
 
 Table 2 below shows **information on predicting peak-gene models from scATAC-seq data alone**.
 
 
-| Model       | Platform  | method          | URL                                                   |
-| ----------- | --------- | --------------- | ----------------------------------------------------- |
-| Cicero      | R         | glasso          | https://github.com/cole-trapnell-lab/cicero-release   |
-| DIRECT-NET  | R         | XGBoost         | https://github.com/zhanglhbioinfor/DIRECT-NET         |
-| Chi2+FDR    | R         | chi-square      |                                                       |
-| scEChIA     | R         | glasso          | https://github.com/reggenlab/scEChiA                  |
-| Pearson     | R         | Pearson         |                                                       |
-| SCEG-HiC    | R         | wglasso         | https://github.com/wuwei77lx/SCEGHiC                  |
+| Model       | Platform  | method             | URL                                                   |
+| ----------- | --------- | ------------------ | ----------------------------------------------------- |
+| Cicero      | R         | glasso             | https://github.com/cole-trapnell-lab/cicero-release   |
+| DIRECT-NET  | R         | XGBoost            | https://github.com/zhanglhbioinfor/DIRECT-NET         |
+| Chi2+FDR    | R         | chi-square         |                                                       |
+| scEChIA     | R         | glasso             | https://github.com/reggenlab/scEChiA                  |
+| Pearson     | R         | Pearson            |                                                       |
+| Enhlink     | R; Python | Random forest-like | https://gitlab.com/Grouumf/enhlinktools               |
+| SCEG-HiC    | R         | wglasso            | https://github.com/wuwei77lx/SCEGHiC                  |
 
 
 Table 3 below shows **information on predicting peak-gene model using the ABC model**.
@@ -55,6 +59,8 @@ Table 3 below shows **information on predicting peak-gene model using the ABC mo
 
 ## Model evaluation
 We evaluated the models using cell type-specific Hi-C data and eQTL data. The directory ```|-- code/evaluation``` contains evaluation metrics (AUPRC and early precision) as well as scripts for processing the cell type-specific Hi-C and eQTL data.
+
+**Note:** The cell type-specific Hi-C data used for validation are independent and were not included in the bulk average Hi-C data.
 
 ### Data (Hi-C and eQTL) Processing:
 - **Hi-C**: Normalized scores (SCALCE or KR) across 5 kb bins are extracted using Juicer Tools. Only interactions with appropriate scores are kept, where one bin overlaps at least one consensus peak and the other overlaps a TSS.
@@ -70,7 +76,7 @@ In the [ABC](https://www.nature.com/articles/s41588-019-0538-0) model, it has be
 
 ### Human average Hi-C (provided by ABC model)
 
-The human cell types used for generating the average Hi-C profile include: GM12878, NHEK, HMEC, RPE1, THP1, IMR90, HUVEC, HCT116, K562, and KBM7.
+The human cell types used for generating the average Hi-C profile include: [34 Hi-C datasets](https://www.encodeproject.org/annotations/ENCSR382HAW/) from the ENCODE project.
 
 **The human average Hi-C data (~54.1 GB) can be downloaded from**:
 https://www.encodeproject.org/files/ENCFF134PUN/@@download/ENCFF134PUN.bed.gz
