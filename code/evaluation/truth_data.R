@@ -21,8 +21,8 @@ peakinfo <- data.frame(chr = split_peaks[, 1],
 peakinfo$name <- peak  # Assign peak names
 
 # -----------------------------------
-# Prepare Hi-C contact-based truth for CD8+ T cells
-# Hi-C data source: [ENCODE database](https://www.encodeproject.org/files/ENCFF009ONH/@@download/ENCFF009ONH.hic)
+# Prepare Hi-C contact-based truth for CD4+ T cells
+# Hi-C data source: [ENCODE database](https://www.encodeproject.org/files/ENCFF762HKR/@@download/ENCFF762HKR.hic)
 # Juicer tools command example provided in comments to extract 5kb resolution contacts for each chromosome
 # wget https://github.com/aidenlab/Juicebox/releases/download/v2.13.06/juicer_tools_2.13.06.jar
 # chromosomes=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "X") 
@@ -33,7 +33,7 @@ contact <- list()  # Initialize list to store contacts by chromosome
 
 for(i in c(1:22, "X")){
   # Load contact matrix for chromosome i at 5kb resolution
-  file_path <- paste0("contact/CD8/", "chr", i, ".SCALEobserved")
+  file_path <- paste0("contact/CD4/", "chr", i, ".SCALEobserved")
   data <- read.table(file_path)
   
   chr <- paste0("chr", i)
@@ -71,7 +71,7 @@ for(i in c(1:22, "X")){
 }
 
 # Save contact list as RDS for downstream use as ground truth
-saveRDS(contact, file = "truth_CD8.rds")
+saveRDS(contact, file = "truth_CD4.rds")
 
 # -----------------------------------
 # Prepare eQTL-based ground truth from GTEx Whole Blood data
@@ -119,4 +119,5 @@ write.table(peakinfo, file = "macs2peak.tsv", row.names = FALSE, col.names = FAL
 # mv macs2peak.tsv macs2peak.bed
 # perl -p -i -e 's/ //g' macs2peak.bed
 # bedtools intersect -a macs2peak.bed -b GTEx.bed -wo | awk '{print $1"\t"$2"\t"$3"\t"$5"\t"$6"\t"$7"\t"$8"\t"$NF"\t"$9}' > GTEx1.bed
+
 
