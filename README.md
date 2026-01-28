@@ -60,7 +60,7 @@ Table 3 below shows **information on predicting peak-gene model using the ABC mo
 ## Model evaluation
 We evaluated the models using cell type-specific Hi-C data and eQTL data. The directory ```|-- code/evaluation``` contains evaluation metrics (AUPRC and early precision) as well as scripts for processing the cell type-specific Hi-C and eQTL data.
 
-**Note:** The cell type-specific Hi-C data used for validation are independent and were not included in the bulk average Hi-C data.
+**Note:** The cell type-specific Hi-C data used for validation are independent and not included in the bulk average Hi-C data.
 
 ### Data (Hi-C and eQTL) Processing:
 - **Hi-C**: Normalized scores (SCALCE or KR) across 5 kb bins are extracted using Juicer Tools. Only interactions with appropriate scores are kept, where one bin overlaps at least one consensus peak and the other overlaps a TSS.
