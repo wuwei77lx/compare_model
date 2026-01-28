@@ -4,7 +4,7 @@
 
 ### Step 1. Processing a multi-omics dataset from Seurat and Signac R objects
 
-scRNA-seq and scATAC-seq count data were exported from a Seurat object in MTX matrix format using the writeMM function from the Matrix R package. Cell type annotations, gene and peak information, and batch effect covariates (if available) were also extracted from the Seurat object. See the code in ```|-- code/model/Enhlink/Data_preparation```.
+scRNA-seq and scATAC-seq count data were exported from a Seurat object in MTX matrix format using the writeMM function from the Matrix R package. Cell type annotations, gene and peak information, and batch effect covariates (if available) were also extracted from the Seurat object. See the code in ```|-- code/model/paired_model/Enhlink/Data_preparation```.
 
 ### Step 2. Processing the data with Enhlink
 
