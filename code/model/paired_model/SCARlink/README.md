@@ -4,7 +4,7 @@
 
 ### Step 1. SCARlink preprocessing
 
-SCARlink requires preprocessed scRNA-seq in a Seurat/anndata object and scATAC-seq (non-binary tile matrix) in ArchR/anndata object. The cell names in both the objects need to be identical. See the code in ```|-- code/model/SCARlink/Data_preparation```.
+SCARlink requires preprocessed scRNA-seq in a Seurat/anndata object and scATAC-seq (non-binary tile matrix) in ArchR/anndata object. The cell names in both the objects need to be identical. See the code in ```|-- code/model/paired_model/SCARlink/Data_preparation```.
 
 ```scarlink_preprocessing``` generates a coassay HDF5 file (```coassay_matrix.h5```) containing gene expression vectors and corresponding tile-accessibility matrices for highly variable genes. The output is saved in a specified directory (e.g., ```multiome_out```), which should be used for all subsequent SCARlink steps.
 
