@@ -12,7 +12,7 @@ We evaluated and applied the model using a total of five human paired scATAC-seq
 
 ## Predict peak-gene model
 
-We provided code for predicting peak-gene models using single-cell omics data. The directory ```|-- code/model/paired_model``` includes methods for predicting gene-peak models from paired scATAC-seq/RNA-seq data, such as Pearson, Spearman, CellOracle, DIRECT-NET, SCENIC+, FigR, Signac, SCARlink, Enhlink, and scMultiMap.. The directory ```|-- code/model/only_scATAC_model``` includes methods for predicting peak-gene models using scATAC-seq data alone, including Cicero, DIRECT-NET, Chi2+FDR, scEChIA, Pearson and Enhlink. The directory ```|-- code/model/ABC``` contains a method for predicting peak-gene models using the ABC model.
+We provided code for predicting peak-gene models using single-cell omics data. The directory ```|-- code/model/paired_model``` includes methods for predicting gene-peak models from paired scATAC-seq/RNA-seq data, such as Pearson, Spearman, CellOracle, DIRECT-NET, SCENIC+, FigR, Signac, SCARlink, Enhlink, and scMultiMap. The directory ```|-- code/model/only_scATAC_model``` includes methods for predicting peak-gene models using scATAC-seq data alone, including Cicero, DIRECT-NET, Chi2+FDR, scEChIA, Pearson and Enhlink. The directory ```|-- code/model/ABC``` contains a method for predicting peak-gene models using the ABC model.
 
 `NOTE`:
 - **Promoter**: 1 kp upstream and downstream of the gene transcription start site (TSS).
